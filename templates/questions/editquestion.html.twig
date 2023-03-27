@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}nouvelle-question{% endblock %}
+
+{% block body %}
+    <div class="w-75 p-1  mx-auto mb-auto position-relative ">
+        {{ form_start(form) }}
+            <div class="formulaire">
+                {{ form_widget(form) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

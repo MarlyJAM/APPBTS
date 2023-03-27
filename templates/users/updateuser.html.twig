@@ -1,0 +1,13 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}modifier{% endblock %}
+
+{% block body %}
+
+ {{ form_start(form) }}
+        <div class="formulaire  mx_auto   w-75">
+            {{ form_widget(form) }}
+        </div>
+{{ form_end(form) }}
+{% endblock %}

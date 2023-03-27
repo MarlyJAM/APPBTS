@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ArticleBlog index{% endblock %}
+
+{% block body %}
+<div class="row row-cols-1 row-cols-md-3 g-4  mx-auto my-auto d-flex align-content-around flex-wrap">
+ {% for article_blog in article_blogs %}
+  {% if article_blog.isPublished == true %}
+  <div class="col">
+    <div class="card  h-100" >
+      {% if article_blog.images is empty  %}
+      <img src="{{asset('images/ezgif.com-resize.gif')}}" class="card-img-top" alt="...">
+      {% else %}
+       <img src="{{asset('uploads/article/mini/300x300-'~ article_blog.images[0].name)}}" class="card-img-top" alt="...">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ article_blog.articleTitle }}</h5>
+        <h4 class="card-text">Ecrit par {{ article_blog.article_auth.pseudo}}</h4>
+        <p class="card-text">{{ article_blog.articleDescription }}</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated  :{{ article_blog.updatedAt|date("d/m/Y H:i") }} </small>
+        <a href="{{ path('app_article_blog_show', {'id': article_blog.id}) }}">show</a>
+        <a href="{{ path('app_article_blog_edit', {'id': article_blog.id}) }}">edit</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% else %}
+  <div>
+        <h2 colspan="5">Aucun article trouvé</h2>
+  </div>
+  {% endfor %}
+</div>
+
+    <a href="{{ path('app_article_blog_new') }}">Create new</a>
+{% endblock %}

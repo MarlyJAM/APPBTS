@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}mes questions{% endblock %}
+
+{% block body %}
+   <section>
+        <div class="container">
+            <h1 class="md text-center my-3">Mes Questions</h1>
+            <div class="grid grid-4 text-center my-4">
+            {% for question in questions %}
+                   <div class="card text-center">
+                        <div class="card-header">
+                            {{question.mainTitle}}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{question.description}}</h5>
+                            <a href="/{{question.id}}/content/ "class="btn btn-primary">{{ button_label|default('Voir') }}</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                           <p class="card-text"><b>Publié par</b> : {{ question.author.pseudo}} <b>le</b> : {{ question.createdAt|date("d/m/Y H:i") }}</p>
+                           <button type="button" class="btn btn-outline-info"><a href="/{{question.id}}/updatequestion" class="btn btn-light">{{ button_label|default('Mettre à jour') }}</a></button>
+                           <button type="button" class="btn btn-outline-danger"><a href="/{{question.id}}/deletequestion" class="btn btn-light">{{ button_label|default('Supprimer') }}</a></button>
+                        </div>
+                    </div><br><br>
+            {% endfor %}
+                
+                
+            </div>
+        </div>
+        <div class="navigation">
+        {{ knp_pagination_render(questions) }}
+    </div>
+    </section>
+    
+{% endblock %}

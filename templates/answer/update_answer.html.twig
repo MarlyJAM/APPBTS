@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}modifer-reponse{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        <div class="formulaire">
+            {{ form_widget(form) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body %}
+<p align=center >{{app.user.pseudo}} c'est votre {{app.session.get('nbrvisite')}} connexion</p>
+<div class="grid grid-4 text-center my-4" align="center">
+  <div class="d-flex position-relative">
+    <fieldset disabled="">
+      <img style="max-width: 150px;" class="card-img-bottom" src="{{ vich_uploader_asset(app.user, 'imageFile') }}">
+      <label class="form-label" for="disabledInput">Pseudo</label>
+      <input class="form-control" id="disabledInput" type="text" placeholder="{{ app.user.pseudo }}" disabled="">
+      <label class="form-label" for="disabledInput">Nom</label>
+      <input class="form-control" id="disabledInput" type="text" placeholder="{{ app.user.lastname }}" disabled="">
+      <label class="form-label" for="disabledInput">Prénom</label>
+      <input class="form-control" id="disabledInput" type="text" placeholder=" {{ app.user.firstname }}" disabled="">
+      <label class="form-label" for="disabledInput">E-mail</label>
+      <input class="form-control" id="disabledInput" type="text" placeholder="{{ app.user.email }}" disabled="">
+    </fieldset>
+  </div>
+</div>
+<button type="button" class="btn btn-primary  btn-sm"><a href="/{{app.user.id}}/edit_users" class="btn btn-primary stretched-link">{{ button_label|default('Mettre à jour') }}</a></button>
+<button type="button" class="btn btn-primary  btn-sm"><a href="/{{app.user.id}}/editpassword" class="btn btn-primary stretched-link">{{ button_label|default('Mettre à jour le mot de passe') }}</a></button>
+{% endblock %}

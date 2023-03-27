@@ -1,0 +1,12 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}modifier-question{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        <div class="formulaire">
+            {{ form_widget(form) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

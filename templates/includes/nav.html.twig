@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-dark w-100 bg-success" >
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{path('app_acceuil')}}">Acceuil
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('app_allquestions')}}">LesQuestions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">À propos</a>
+        </li>
+        {% if app.user %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="true">Menu</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{path('app_questions')}}">Poser une questions</a>
+                <a class="dropdown-item" href="{{path('app_myquestions')}}">Mes questions</a>
+                <a class="dropdown-item" href="{{path('app_myanswers')}}">Mes réponses</a>
+                <a class="dropdown-item" href="{{path('app_users')}}">Mon profil</a>
+                {% if 'ROLE_ADMIN'in  app.user.roles %}
+                    <a class="dropdown-item" href="{{path('admin')}}">Administration</a>
+                {% endif %}
+                <div class="dropdown-divider"></div>
+            </div>
+        </li>
+        <li class="nav-item">
+           <a class="nav-link" href="{{path('app_logout')}}">Deconnexion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Bienvenue {{app.user.pseudo}}</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login')}}">Se connecter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('app_register')}}">S'inscrire</a>
+        </li>
+        {% endif %}
+      </ul>
+       {% if app.request.attributes.get('_route')=='app_allquestions' %}
+        {% include "includes/_search_data.html.twig" with {
+        form:form
+       } only %}
+      {% else %}
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="search" placeholder="Rechercher">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Ok</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</nav>

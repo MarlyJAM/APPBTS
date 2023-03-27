@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}nouvelle-reponse{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        <div class="formulaire">
+            {{ form_widget(form) }}
+            <button class="btn">{{ button_label|default('soumettre') }}</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}mes réponses{% endblock %}
+
+{% block body %}
+<section>
+        <div class="container">
+            <h1 class="md text-center my-3">Mes Réponses</h1>
+            <div class="grid grid-4 text-center my-4">
+            {% for answer in answers %}
+                   <div class="card text-center">
+                        <div class="card-header">
+                            <p class="card-title">Question de {{answer.question.author.pseudo}} publié le  {{answer.question.createdAt |date("d/m/Y H:i")}}</p>
+                            <p class="card-title"><b>TITRE</b> : {{answer.question.mainTitle}}</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title">{{answer.content|raw }}</p>
+                            <p class="card-text">Publié par :{{ answer.auth.pseudo}}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                           {{ answer.updatedAt|date("d/m/Y H:i") }}
+                           <button type="button" class="btn btn-outline-info"><a href="/{{answer.id}}/updateanswer" class="btn btn-light">{{ button_label|default('Mettre à jour') }}</a></button>
+                           <button type="button" class="btn btn-outline-danger"><a href="/{{answer.id}}/deleteanswer" class="btn btn-light">{{ button_label|default('Supprimer') }}</a></button>
+                        </div>
+                    </div><br><br>
+            {% endfor %}
+                
+                
+            </div>
+        </div>
+        <div class="navigation">
+        {{ knp_pagination_render(answers) }}
+    </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}contenu-question{% endblock %}
+
+{% block body %}
+    <section class="container-md">
+        <div class="container " >
+            <div class="grid grid-4 text-center my-4 ">
+                    <div class="card text-bg-light mb-3">
+                        <div class="card-header">
+                            {{question.mainTitle}}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{question.description}}</h5>
+                            <h6 class="card-text">{{question.content|raw }}</h6>
+                            <p class="card-text"><b>Publié par</b> : {{ question.author.pseudo}} <b>le</b> : {{ question.createdAt|date("d/m/Y H:i") }}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <img style="max-width: 500px;" class="card-img-bottom" src="{{ vich_uploader_asset(question, 'imageFile') }}">
+                        </div>
+
+                    </div>
+            </div>
+        </div>
+    </section><br><br> 
+    <section class="container-md">
+        <div class="card text-center">
+          <h4 class="card-title">Réponses</h4>
+        </div><br><br> 
+
+        {% for answer in question.answers %}
+        {% if answer.isVerified == true %}
+        <div class="container" >
+            <div class="grid grid-4 text-center my-4">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h6 class="card-text">Publié par :{{ answer.auth.pseudo}}</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{answer.content|raw }}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                           {{ answer.createdAt|date("d/m/Y H:i") }}
+                            {% if answer.auth == app.user %}
+                            <button type="button" class="btn btn-outline-info"><a href="/{{answer.id}}/updateanswer" class="btn btn-light">{{ button_label|default('Mettre à jour') }}</a></button>
+                            <button type="button" class="btn btn-outline-danger"><a href="/{{answer.id}}/deleteanswer" class="btn btn-light">{{ button_label|default('Supprimer') }}</a></button>
+                            {% endif %}
+                        </div>
+                    </div><br><br>   
+            </div>
+        </div> 
+        {% endif %} 
+        {% endfor %}
+        <div>
+            {{ form_start(answer_form) }}
+                <div class="formulaire">
+                    {{ form_widget(answer_form) }}
+                </div>
+            {{ form_end(answer_form) }}
+        </div>
+    </section><br><br> 
+    
+    
+    
+{% endblock %}
