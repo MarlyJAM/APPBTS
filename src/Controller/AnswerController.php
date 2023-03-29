@@ -12,6 +12,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
@@ -62,7 +63,7 @@ class AnswerController extends AbstractController
      */
     #[Route('/{id}/updateanswer',name:'app_updateanswer',methods:['GET','POST'])]
     #[Security("is_granted('ROLE_USER') and user === a.getAuth()")]
-    public function updateanswer(Answer $a,Request $request,ManagerRegistry $doctrine) : Response
+    public function updateanswer(Answer $a,Request $request,ManagerRegistry $doctrine,FlashyNotifier $flashy) : Response
     {   
         $question = $a->getQuestion();
         $form = $this->createForm(AnswerType::class, $a);
@@ -77,9 +78,10 @@ class AnswerController extends AbstractController
             $a->setQuestion($question);
             $em ->persist($a);
             $em -> flush();
-            $this->addFlash('success', 'Question Updated! Knowledge is power!');
+            $flashy->success('Votre réponse a bien été modifiée');
 
-            return $this-> redirectToRoute('app_acceuil');
+            return $this-> redirectToRoute('app_myanswers');
+            
         }
         return $this->render('answer/update_answer.html.twig',[
             'form' => $form->createView(),
@@ -94,11 +96,13 @@ class AnswerController extends AbstractController
     #[Route('/{id}/deleteanswer',name:'app_deleteanswer',methods:['GET'])]
     #[isGranted('ROLE_USER')]
     #[Security("is_granted('ROLE_USER') and user === a.getAuth()")]
-    public function deleteanswer(EntityManagerInterface $manager,Answer $a) : Response
+    public function deleteanswer(EntityManagerInterface $manager,Answer $a,FlashyNotifier $flashy) : Response
     {
             $manager->remove($a);
             $manager ->flush();
-            return $this-> redirectToRoute('app_acceuil');
+            $flashy->success('Votre réponse a bien été supprimée');
+
+            return $this-> redirectToRoute('app_myanswers');
     }
 
 }

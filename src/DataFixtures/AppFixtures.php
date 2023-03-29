@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Answer;
+use App\Entity\Category;
 use App\Entity\Users;
 use Faker\Factory;
 use App\Entity\Questions;
@@ -42,15 +43,26 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        //Categories
+        $categories=[];
+        for($i = 1; $i < 10; $i++){
+            $category=new Category();
+            $category->setName($this->faker->word(10));
+            $categories[]=$category;
+            $manager->persist($category);
+
+        }
+
 
         //Questions
         $questions = [];
         for ($i = 1; $i < 26; $i++) {
             $question = new Questions();
-            $question->setMainTitle($this->faker->word(10))
+            $question->setMainTitle($this->faker->sentence(2))
                     ->setDescription($this->faker->sentence(10))
                     ->setContent($this->faker->paragraph(4))
-                    ->setAuthor($users[mt_rand(1, count($users) - 1)]);
+                    ->setAuthor($users[mt_rand(1, count($users) - 1)])
+                    ->setCategory($categories[mt_rand(1, count($categories) - 1)]);
             $questions[] = $question;
             $manager->persist($question);
         }

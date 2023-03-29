@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,7 @@ class UsersController extends AbstractController
     }
     #[Security("is_granted('ROLE_USER') and user === u")]
     #[Route('/{id}/edit_users', name: 'app_editusers',methods:['GET','POST'])]
-    public function UpdateUsers(Users $u ,Request $request , ManagerRegistry $doctrine,EntityManagerInterface $manager ,UserPasswordHasherInterface $hasher ) : Response{
+    public function UpdateUsers(Users $u ,Request $request , ManagerRegistry $doctrine,EntityManagerInterface $manager ,UserPasswordHasherInterface $hasher,FlashyNotifier $flashy ) : Response{
 
         $form = $this->createForm(UpdateUsersType::class, $u);
 
@@ -44,17 +45,12 @@ class UsersController extends AbstractController
             if ($hasher->isPasswordValid($u,$form->getData()->getPlainPassword())) {
                 $emi ->persist($u);
                 $emi -> flush();
-                $this->addFlash(
-                    'sucess',
-                    'Les informations de votre compte ont bien été modifiées.'
-                );
-    
-                return $this-> redirectToRoute('app_acceuil');
+                $flashy->success('Vos informations ont bien été modifiées');
+                return $this-> redirectToRoute('app_users');
+
             }else {
-                $this->addFlash(
-                    'warnig',
-                    'Le mot de passe est incorrect.'
-                );
+                $flashy->error("Vos informations n'ont pas pu etre modifiées");
+                return $this-> redirectToRoute('app_users');
             }
            
         }
@@ -65,7 +61,7 @@ class UsersController extends AbstractController
     }
     #[Route('/{id}/editpassword', name: 'app_edipassword',methods:['GET','POST'])]
     #[Security("is_granted('ROLE_USER') and user === us")]
-    public function editPassword(Users $us ,Request $request , ManagerRegistry $doctrine,EntityManagerInterface $manager ,UserPasswordHasherInterface $hasher) : Response
+    public function editPassword(Users $us ,Request $request , ManagerRegistry $doctrine,EntityManagerInterface $manager ,UserPasswordHasherInterface $hasher,FlashyNotifier $flashy) : Response
     {
         $form = $this->createForm(UserPasswordType::class);
         $form->handleRequest($request);
@@ -81,21 +77,13 @@ class UsersController extends AbstractController
                     )
                 )
                 ;
-
-                $this->addFlash(
-                    'success',
-                    'Le mot de passe a été modifié.'
-                );
-                echo 'reussie' ;
                 $emi->persist($us);
                 $emi->flush();
-                dd($us);
-                return $this->redirectToRoute('recipe.index');
+                $flashy->success('Vos informations ont bien été modifiées');
+                return $this-> redirectToRoute('app_users');
             } else {
-                $this->addFlash(
-                    'warning',
-                    'Le mot de passe renseigné est incorrect.'
-                );
+                $flashy->error("Vos informations n'ont pas pu etre modifiées");
+                return $this-> redirectToRoute('app_users');
             }
         }
 

@@ -12,8 +12,8 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{question.description}}</h5>
-                            <h6 class="card-text">{{question.content|raw }}</h6>
-                            <p class="card-text"><b>Publié par</b> : {{ question.author.pseudo}} <b>le</b> : {{ question.createdAt|date("d/m/Y H:i") }}</p>
+                            <p class="card-text">{{question.content|raw }}</p>
+                            <p class="card-text"><i>Publié par</i> : {{ question.author.pseudo}} <i>le</i> : {{ question.createdAt|date("d/m/Y H:i") }}</p>
                         </div>
                         <div class="card-footer text-muted">
                             <img style="max-width: 500px;" class="card-img-bottom" src="{{ vich_uploader_asset(question, 'imageFile') }}">

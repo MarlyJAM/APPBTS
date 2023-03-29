@@ -4,20 +4,23 @@
 
 {% block body %}
     {% if article_blog.images is empty%}
-       <div class="card text-center mx-auto my-auto w-75  ">
-                <div class="card-header">
-                   <p>Ecrit par {{ article_blog.article_auth.pseudo }}<p/>
+       <div class="maincard">
+                <div align="center">
+                <div class="cardheader">
+                   <img class="image_author" src="{{ vich_uploader_asset(article_blog.article_auth, 'imageFile') }}">
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ article_blog.articleTitle }}</h5>
-                    <p class="card-text">{{ article_blog.articleDescription }}</p>
-                    <p class="card-text">{{ article_blog.articleContent }}</p>
+                <p> <i>Ecrit par {{article_blog.article_auth.pseudo}} </i></p>
                 </div>
-                <div class="card-footer text-muted">
-                    <p class="card-text"><small class="text-muted">Last updated {{ article_blog.updatedAt|date("d/m/Y H:i") }} </small></p>
-                    <p class="card-text"><small class="text-muted">Last updated {{ article_blog.createdAt|date("d/m/Y H:i") }} </small></p>
+                <div class="cardbody" align="center">
+                    <h5 class="card-title">{{ article_blog.articleTitle }}</h5><br>
+                    <p class="card-text">{{ article_blog.articleDescription }}</p><br>
+                    <p  class="cardtxt">{{ article_blog.articleContent }}</p>
+                </div><br>
+                <div class="cardfooter">
+                    <p class="cardtxt"><i>Mis à jour le  {{ article_blog.updatedAt|date("d/m/Y H:i") }} </i></p>
+                    <p class="cardtxt"><i>Créé le  {{ article_blog.createdAt|date("d/m/Y H:i") }} </i></p>
                 </div>
-        </div>
+        </div><br>
          
     {% else %}
      <div class="card mb-3 mx-auto my-auto">
@@ -38,15 +41,13 @@
                 <p class="card-text">{{ article_blog.article_auth.pseudo }}</p>
                 <p class="card-text">{{ article_blog.articleDescription }}</p>
                 <p class="card-text">{{ article_blog.articleContent }}</p>
-                <p class="card-text"><small class="text-muted">Last updated {{ article_blog.updatedAt|date("d/m/Y H:i") }} </small></p>
-                <p class="card-text"><small class="text-muted">Last updated {{ article_blog.createdAt|date("d/m/Y H:i") }} </small></p>
+                <p class="card-text"><small class="text-muted">Last updated : {{ article_blog.updatedAt|date("d/m/Y H:i") }} </small></p>
             </div>
-    </div>
+    </div><br>
         
     {% endif %}
-    <a href="{{ path('app_article_blog_index') }}">back to list</a>
+    <a href="{{ path('app_article_blog_index') }}" class="btn btn-primary" href="#" role="button">retour</a>
 
-    <a href="{{ path('app_article_blog_edit', {'id': article_blog.id}) }}">edit</a>
-
-    {{ include('article_blog/_delete_form.html.twig') }}
+    {#<a href="{{ path('app_article_blog_edit', {'id': article_blog.id}) }}" >edit</a>
+#}
 {% endblock %}

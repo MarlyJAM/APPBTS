@@ -2,9 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Questions;
 use Symfony\Component\Form\AbstractType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +18,15 @@ class EditQuestionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('category' , EntityType::class ,[
+                'class'=>Category::class,
+                'choice_label' => 'name',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please choose a category',
+                    ]),
+                ]
+            ])
             ->add('mainTitle',TextType::class,[
                 'constraints' => [
                     new NotBlank([
@@ -31,7 +41,7 @@ class EditQuestionsType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('content',CKEditorType::class,[
+            ->add('content',TextType::class,[
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a word',

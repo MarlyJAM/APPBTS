@@ -53,6 +53,9 @@ class Questions
 
     #[ORM\Column]
     private ?bool $isVerified = false;
+
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    private ?Category $category = null;
     #[ORM\PrePersist]
     public function setUpdatedAtValue(): void
     {
@@ -204,6 +207,18 @@ class Questions
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

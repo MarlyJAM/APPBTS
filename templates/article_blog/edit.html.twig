@@ -3,10 +3,6 @@
 {% block title %}Edit ArticleBlog{% endblock %}
 
 {% block body %}
-    <h1>Edit ArticleBlog</h1>
-
-    {{ include('article_blog/_form.html.twig', {'button_label': 'Update'}) }}
-     <h2>Images</h2>
     {% for image in article_blog.images %}
         <div >
             <img src="{{asset('uploads/article/mini/300x300-'~ image.name)}}" >

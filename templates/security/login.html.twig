@@ -3,6 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+<div class="container-md">
 <form method="post" class="formulaire mx_auto w-75">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -40,4 +41,5 @@
     </button>
      <p ><a href="{{path('app_register')}}">Pas encore inscrit?</p>
 </form>
+</div>
 {% endblock %}

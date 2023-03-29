@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <link rel="stylesheet" href="{{asset('style/style.css')}}">
+    </head>
+    <body>
+    <div class="maincontainer" >
+        <h1>Demande de {{contact.fullname}}</h1>
+        <div class="container-md">
+            <p>Email :  {{contact.email}}</p>
+            <p>Sujet : {{contact.subject}}</p>
+            <p>Message :</p>
+            <div>
+                {{contact.message|raw }}
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+

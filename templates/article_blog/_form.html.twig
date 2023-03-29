@@ -1,9 +1,12 @@
+<div class="container-md">
 {{ form_start(form) }}
+    {{ form_row(form.category) }}
     {{ form_row(form.articleTitle) }}
     {{ form_row(form.articleDescription) }}
     {{ form_row(form.articleContent) }}
 {#On affiche les images si on est en édition#}
    {#% if app.request.attributes.get('_route')=='app_article_blog_edit' %#}
     {{form_row(form.image)}}
-    <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+</div>
+

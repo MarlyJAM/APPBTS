@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark w-100 bg-success" >
+<nav class="navbar navbar-expand-lg navbar-dark w_100 bg-success" >
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav me-auto">
@@ -11,7 +11,7 @@
           <a class="nav-link" href="{{path('app_allquestions')}}">LesQuestions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Blog</a>
+          <a class="nav-link" href="{{path('app_article_blog_index')}}">Blog</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">À propos</a>
@@ -20,11 +20,13 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="true">Menu</a>
             <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{path('app_users')}}">Mon profil</a>
                 <a class="dropdown-item" href="{{path('app_questions')}}">Poser une questions</a>
                 <a class="dropdown-item" href="{{path('app_myquestions')}}">Mes questions</a>
                 <a class="dropdown-item" href="{{path('app_myanswers')}}">Mes réponses</a>
-                <a class="dropdown-item" href="{{path('app_users')}}">Mon profil</a>
                 {% if 'ROLE_ADMIN'in  app.user.roles %}
+                    <a class="dropdown-item" href="{{path('app_article_blog_myarticles')}}">Mes Articles</a>
+                    <a  class="dropdown-item" href="{{ path('app_article_blog_new') }}">Nouvel Article</a>
                     <a class="dropdown-item" href="{{path('admin')}}">Administration</a>
                 {% endif %}
                 <div class="dropdown-divider"></div>

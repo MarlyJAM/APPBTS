@@ -43,6 +43,10 @@ class ArticleBlog
     #[ORM\Column]
     private ?bool $isPublished = false;
 
+    #[ORM\ManyToOne(inversedBy: 'articleBlogs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $categorie = null;
+
     #[ORM\PrePersist]
     public function setUpdatedAtValue(): void
     {
@@ -161,6 +165,18 @@ class ArticleBlog
     {
         $format = "ArticleBlog (id: %s)\n";
         return sprintf($format, $this->id);
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->categorie;
+    }
+
+    public function setCategory(?Category $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
     }
 
 

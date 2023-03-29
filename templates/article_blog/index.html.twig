@@ -3,7 +3,8 @@
 {% block title %}ArticleBlog index{% endblock %}
 
 {% block body %}
-<div class="row row-cols-1 row-cols-md-3 g-4  mx-auto my-auto d-flex align-content-around flex-wrap">
+<div class="container-md">
+<div  class="row row-cols-1 row-cols-md-3 g-4 d-flex align-content-around flex-wrap">
  {% for article_blog in article_blogs %}
   {% if article_blog.isPublished == true %}
   <div class="col">
@@ -21,7 +22,6 @@
       <div class="card-footer">
         <small class="text-muted">Last updated  :{{ article_blog.updatedAt|date("d/m/Y H:i") }} </small>
         <a href="{{ path('app_article_blog_show', {'id': article_blog.id}) }}">show</a>
-        <a href="{{ path('app_article_blog_edit', {'id': article_blog.id}) }}">edit</a>
       </div>
     </div>
   </div>
@@ -32,6 +32,5 @@
   </div>
   {% endfor %}
 </div>
-
-    <a href="{{ path('app_article_blog_new') }}">Create new</a>
+</div>
 {% endblock %}

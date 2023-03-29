@@ -2,27 +2,29 @@
 
 namespace App\Controller;
 
-use App\Entity\Questions;
-use App\Form\EditQuestionsType;
-use App\Repository\QuestionsRepository;
+use DateTime;
 use App\Entity\Answer;
 use App\Form\AnswerType;
 use App\Form\SearchType;
+use App\Entity\Questions;
 use App\Model\SearchData;
+use App\Form\EditQuestionsType;
+use Doctrine\ORM\Mapping\OrderBy;
 use App\Repository\AnswerRepository;
-use DateTime;
+use App\Repository\QuestionsRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Console\Question\Question;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 
 
 class QuestionsController extends AbstractController
@@ -36,7 +38,7 @@ class QuestionsController extends AbstractController
      */
     #[Route('/questions', name: 'app_questions',methods:['GET','POST'])]
     #[isGranted('ROLE_USER')]
-    public function index(Request $request , ManagerRegistry $doctrine): Response
+    public function index(Request $request , ManagerRegistry $doctrine,FlashyNotifier $flashy): Response
     {
         $question = new Questions();
 
@@ -50,9 +52,9 @@ class QuestionsController extends AbstractController
             $question ->setAuthor($this->getUser());
             $em ->persist($question);
             $em -> flush();
-            $this->addFlash('success', 'Question Created! Knowledge is power!');
+            $flashy->success('Votre question est en vérification');
 
-            return $this-> redirectToRoute('app_acceuil');
+            return $this-> redirectToRoute('app_myquestions');
         }
         return $this->render('questions/editquestion.html.twig', [
             'form' => $form->createView(),
@@ -72,11 +74,15 @@ class QuestionsController extends AbstractController
         
          $searchData = new SearchData();
          $form= $this->createForm(SearchType::class , $searchData);
-
          $form->handleRequest($request);
 
          if ($form->isSubmitted() && $form->isValid()) {
-            dd($searchData);
+            $searchData->page=$request->query->getInt('page',1);
+            $questions=$repository->findBySearch($searchData);
+            return $this->render('questions/index.html.twig',[
+                'form'=>$form->createView(),
+                'questions' => $questions
+            ]);
          }
 
         $questions = $paginator->paginate(
@@ -116,8 +122,9 @@ class QuestionsController extends AbstractController
 
     }
 
+    
     #[Route('/{id}/content/', name: 'app_content')]
-    public function showcontent(Request $request, Questions $question,QuestionsRepository $questionRepository,ManagerRegistry $doctrine): Response
+    public function showcontent(Request $request, Questions $question,QuestionsRepository $questionRepository,ManagerRegistry $doctrine,FlashyNotifier $flashy): Response
      {
         $answer = new Answer();
 
@@ -132,8 +139,10 @@ class QuestionsController extends AbstractController
             $answer->setQuestion($question);
             $em ->persist($answer);
             $em -> flush();
+            $flashy->success('Votre réponse est en vérification');
 
-            return $this-> redirectToRoute('app_acceuil');
+            return $this-> redirectToRoute('app_myanswers');
+
         }
 
 
@@ -149,7 +158,7 @@ class QuestionsController extends AbstractController
      */
     #[Route('/{id}/updatequestion',name:'app_updatequestion',methods:['GET','POST'])]
     #[Security("is_granted('ROLE_USER') and user === q.getAuthor()")]
-    public function updatequeqtions(Questions $q,Request $request,ManagerRegistry $doctrine) : Response
+    public function updatequeqtions(Questions $q,Request $request,ManagerRegistry $doctrine,FlashyNotifier $flashy) : Response
     {
         $form = $this->createForm(EditQuestionsType::class, $q);
 
@@ -161,9 +170,9 @@ class QuestionsController extends AbstractController
             $q ->setAuthor($this->getUser());
             $em ->persist($q);
             $em -> flush();
-            $this->addFlash('success', 'Question Updated! Knowledge is power!');
+            $flashy->success('Votre question a bien été modifiée');
 
-            return $this-> redirectToRoute('app_acceuil');
+            return $this-> redirectToRoute('app_myquestions');
         }
         return $this->render('questions/updatequestion.html.twig',[
             'form' => $form->createView(),
@@ -177,11 +186,13 @@ class QuestionsController extends AbstractController
     #[Route('/{id}/deletequestion',name:'app_deletequestion',methods:['GET'])]
     #[isGranted('ROLE_USER')]
     #[Security("is_granted('ROLE_USER') and user === question.getAuthor()")]
-    public function delete(EntityManagerInterface $manager,Questions $question) : Response
+    public function delete(EntityManagerInterface $manager,Questions $question,FlashyNotifier $flashy) : Response
     {
             $manager->remove($question);
             $manager ->flush();
-            return $this-> redirectToRoute('app_acceuil');
+            $flashy->success('Votre question a bien été supprimée');
+
+            return $this-> redirectToRoute('app_myquestions');
     }
    
 }

@@ -3,9 +3,9 @@
 {% block title %}questions{% endblock %}
 
 {% block body %}
-    <div class="row row-cols-1 row-cols-md-3 g-4  mx-auto my-auto d-flex align-content-around flex-wrap">
+    <div id="cardq" class="row row-cols-1 row-cols-md-3 g-4 w-75 mx-auto my-auto d-flex align-content-around flex-wrap">
     {% for question in questions %}
-    {% if question.isVerified == true %}
+    {#% if question.isVerified == true %#}
         <div class="col">
         <div class="card h-100">
             <div class="card-header">
@@ -20,7 +20,7 @@
             </div>
         </div>
         </div>
-    {% endif %}
+    {#% endif %#}
     {% endfor %}          
     </div>
     <div class="navigation">
