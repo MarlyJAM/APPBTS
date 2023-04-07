@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}propos{% endblock %}
 
 {% block body %}
 
-
 <div class="container-md">
-    
-    <div class="container">
-    {{form(form)}}
-    </div>
+{{ form(form) }}
 </div>
+
+ <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
 {% endblock %}

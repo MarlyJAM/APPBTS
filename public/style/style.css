@@ -58,7 +58,13 @@ p.cardtxt{
     margin: auto;
 }
 
-  
+.container-perso{
+    background-image: url("../images/backperso.png");
+}
+
+#invisible{
+    background-color: transparent;
+} 
 /*footer {
     position: absolute;
     bottom: 0;
