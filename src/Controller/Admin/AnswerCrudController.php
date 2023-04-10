@@ -14,6 +14,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use phpDocumentor\Reflection\Types\Boolean;
 use App\Entity\Answer;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AnswerCrudController extends AbstractCrudController
 {
@@ -27,8 +28,8 @@ class AnswerCrudController extends AbstractCrudController
         return $crud
              ->setEntityLabelInPlural('Réponses')
              ->setPageTitle('index', 'NWM-Administration des réponses')
-             ->setEntityLabelInSingular('Réponse')
-             ->addFormTheme( '@FOSCKEditor/Form/ckeditor_widget.html.twig');
+             ->setEntityLabelInSingular('Réponse');
+             
     }
     
     public function configureFields(string $pageName): iterable
@@ -37,12 +38,12 @@ class AnswerCrudController extends AbstractCrudController
             IdField::new('id')
             ->hideOnForm(),
             TextareaField::new('content')
-            ->setFormType(CKEditorType::class)
+            ->setFormType(TextareaType::class)
             ->setFormTypeOption('disabled','disabled'),
             TextField::new('imageName')
             ->setFormTypeOption('disabled','disabled'),
             TextareaField::new('question.content')
-            ->setFormType(CKEditorType::class)
+            ->setFormType(TextareaType::class)
             ->setFormTypeOption('disabled','disabled'),
             TextField::new('auth.pseudo')
             ->setFormTypeOption('disabled','disabled'),

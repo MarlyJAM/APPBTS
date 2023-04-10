@@ -26,8 +26,8 @@ class QuestionsCrudController extends AbstractCrudController
         return $crud
              ->setEntityLabelInPlural('Questions')
              ->setPageTitle('index', 'NWM-Administration des questions')
-             ->setEntityLabelInSingular('Question')
-             ->addFormTheme( '@FOSCKEditor/Form/ckeditor_widget.html.twig');
+             ->setEntityLabelInSingular('Question');
+             
     }
     
     public function configureFields(string $pageName): iterable
@@ -40,7 +40,7 @@ class QuestionsCrudController extends AbstractCrudController
             TextareaField::new('description')
             ->setFormTypeOption('disabled','disabled'),
             TextareaField::new('content')
-            ->setFormType(CKEditorType::class)
+            ->setFormType(TextareaType::class)
             ->setFormTypeOption('disabled','disabled'),
             TextField::new('imageName')
             ->setFormTypeOption('disabled','disabled'),

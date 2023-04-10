@@ -24,8 +24,8 @@ class ArticleBlogCrudController extends AbstractCrudController
         return $crud
              ->setEntityLabelInPlural('Articles')
              ->setPageTitle('index', 'NWM-Administration des articles')
-             ->setEntityLabelInSingular('Article')
-             ->addFormTheme( '@FOSCKEditor/Form/ckeditor_widget.html.twig');
+             ->setEntityLabelInSingular('Article');
+            
     }
 
     public function configureFields(string $pageName): iterable
@@ -38,7 +38,7 @@ class ArticleBlogCrudController extends AbstractCrudController
             TextareaField::new('articleDescription')
             ->setFormTypeOption('disabled','disabled'),
             TextareaField::new('articleContent')
-            ->setFormType(CKEditorType::class)
+            ->setFormType(TextareaType::class)
             ->setFormTypeOption('disabled','disabled'),
             TextField::new('article_auth.pseudo')
             ->setFormTypeOption('disabled','disabled'),
