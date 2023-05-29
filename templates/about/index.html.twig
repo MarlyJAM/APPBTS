@@ -3,6 +3,41 @@
 
 {% block body %}
 <div class="container-md">
+<div class="card mb-3" style="max-width: 100%;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{asset('images/bloc2.jpg')}}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">QUI SOMMES NOUS ?</h5>
+        <h1 class="mx-auto"> &#128220 </h1>
+        <p class="card-text">Enfin 2021 je commence l'informatique, plus précisément le développement web et la programmation en python.
+        Comme toujours lorsque l'on commence un projet ça me paraît compliqué, je parcours Youtube, les forums et les blogs et parviens enfin à
+        à acquérir les bases nécessaires.Cependant pendant mes recherches je compris vite l'utilité des blogs et forums et me mis en tete d'en réaliser
+        pour partager moi aussi des astuces ; mais un projet pareil avec mon niveau en ce temps ne m'était pas donné, c'est pourquoi j'ai décidé de m'associer à des amis qui eux aussi 
+        étudient le développement informatique et quelques mois plus tard NWM est né &#128129. </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card mb-3" style="max-width: 100%;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{asset('images/bloc1.jpg')}}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">NOS MISSIONS</h5>
+        <h1 class="mx-auto">&#128373</h1>
+        <p class="card-text">NWM a pour mission de diffuser savoir et connaissances informatiques à qui veut . Pour ce faire , nous mettons à disposition des articles
+         traitant de sujets variés afin de susciter un intérêt nouveau à chaque nouvel article posté .Le forum a été fait pour compléter nos
+          articles et permettre aux différents utilisateurs de s'entraider . Aussi, vous pouvez retrouver nos travaux sur github pour vous entrainer à les modifier.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<h1 align="center">CONTACTEZ-NOUS</h1>
 
 <div class="row">
 
@@ -68,28 +103,27 @@
                 </div>
                 <!--Grid row-->
 
-            </form>
-
             <div class="text-center text-md-left">
-                {{ form_row(form.submit) }}
+                {{ form_row(form.submit, { 'label': 'Envoyer' }) }}
             </div>
             <div class="status"></div>
         </div>
+        {{ form_end(form) }}
         <!--Grid column-->
 
         <!--Grid column-->
         <div class="col-md-3 text-center">
             <ul class="list-unstyled mb-0">
                 <li><i class="fas fa-map-marker-alt fa-2x"></i>
-                    <p>San Francisco, CA 94126, USA</p>
+                    <p><a class="alt" href="https://goo.gl/maps/bWMwjC4uPoQoA2o37?coh=178571&entry=tt">15 rue du Louvre 75001 Paris, FRANCE</a></p>
                 </li>
 
                 <li><i class="fas fa-phone  mt-4 fa-2x"></i>
-                    <p>+ 01 234 567 89</p>
+                   <p><a class="alt" href="tel:+33 7.45.42.60.16">+33 7 45 42 60 16</a></p>
                 </li>
 
                 <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                    <p>contact@mdbootstrap.com</p>
+                  <p><a class="alt" href="mailto:forumnwm@gmail.com">forumnwm@gmail.com</a></p>
                 </li>
             </ul>
         </div>
@@ -97,5 +131,4 @@
 
     </div>
 </div>
-
 {% endblock %}

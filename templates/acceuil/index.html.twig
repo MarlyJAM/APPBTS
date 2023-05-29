@@ -3,18 +3,30 @@
 {% block title %}acceuil{% endblock %}
 
 {% block body %}
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active ">
-            <img src="{{asset('images/backimg.jpeg')}}" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="{{asset('images/programming-background-collage.jpg')}}" class="d-block w-100 " alt="...">
-        </div>
-        <div class="carousel-item ">
-            <img src="{{asset('images/professional-programmer-working-late-dark-office.jpg')}}" class="d-block w-100 " alt="...">
-        </div>
+<div class="mainpage" style="background-image: url('{{asset('images/backimg.jpeg')}}')">
+    <div class="mainpageombre">
+        <center class="centermain">
+            <h4 id="text" class="h4"><b>BIENVENUE SUR NWM ,DES REPONSES A VOS QUESTIONS SUR LE MONDE INFORMATIQUE</b><h4> <br>
+            <img src="{{asset('images/logoapp.png')}}"><br>
+            <button class="button" ><span><a href="{{path('app_register')}}">Débutez !</a></span></button>
+        </center>
     </div>
 </div>
+<script>
+    var text = document.getElementById('text');
+    var splitText = text.innerText.split('');
 
+    text.innerHTML = '';
+    i = 0
+    setInterval(function(){
+        AjoutDeLettre()}
+        , 100 )
+
+    function AjoutDeLettre(){
+    if(i < splitText.length){
+        text.innerHTML += splitText[i];
+        i++;
+    }
+    }
+</script>
 {% endblock %}

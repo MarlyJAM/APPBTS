@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class EditQuestionsType extends AbstractType
@@ -41,7 +42,7 @@ class EditQuestionsType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('content',TextType::class,[
+            ->add('content',TextareaType::class,[
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a word',
