@@ -4,17 +4,19 @@
 
 {% block body %}
     <div id="cardq" class="row row-cols-1 row-cols-md-3 g-4 w-75 mx-auto my-auto d-flex align-content-around flex-wrap">
-    {% for category in categories %}
+    {% for question in questions %}
     {#% if question.isVerified == true %#}
         <div class="col">
         <div class="card h-100">
             <div class="card-header">
-             {{category.name}}
+             {{question.mainTitle}}
              </div>
             <div class="card-body">
-              <a href="/{{category.id}}/allquestions/ "class="btn btn-primary">{{ button_label|default('Voir Les Questions') }}</a>
+            <h5 class="card-title">{{question.description}}</h5>
+            <a href="/{{question.id}}/content/ "class="btn btn-primary">{{ button_label|default('Voir') }}</a>
             </div>
             <div class="card-footer text-muted">
+            <p class="card-text"><b>Publié par</b> : {{ question.author.pseudo}} <b>le</b> : {{ question.createdAt|date("d/m/Y H:i") }}</p>
             </div>
         </div>
         </div>
@@ -22,7 +24,7 @@
     {% endfor %}          
     </div>
     <div class="navigation">
-        {{ knp_pagination_render(categories) }}
+        {{ knp_pagination_render(questions) }}
     </div>
         
     

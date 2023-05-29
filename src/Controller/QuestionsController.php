@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Answer;
+use App\Entity\Category;
 use App\Form\AnswerType;
 use App\Form\SearchType;
 use App\Entity\Questions;
@@ -11,6 +12,7 @@ use App\Model\SearchData;
 use App\Form\EditQuestionsType;
 use Doctrine\ORM\Mapping\OrderBy;
 use App\Repository\AnswerRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\QuestionsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -60,6 +62,22 @@ class QuestionsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/allcategories',name:'app_allcategories')]
+    public function showallcategories(CategoryRepository $repository, PaginatorInterface $paginator,Request $request):Response
+    {
+
+        $categories = $paginator->paginate(
+            $repository->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );
+        
+        return $this->render('questions/index.html.twig',[
+            'categories' => $categories
+        ]);
+
+    }
     /**
      * Affichage de toutes les questions
      *
@@ -68,8 +86,8 @@ class QuestionsController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/allquestions',name:'app_allquestions')]
-    public function showall(QuestionsRepository $repository, PaginatorInterface $paginator,Request $request):Response
+    #[Route('/{id}/allquestions',name:'app_allquestions')]
+    public function showall(Category $category,  QuestionsRepository $repository, PaginatorInterface $paginator,Request $request):Response
     {
         
          $searchData = new SearchData();
@@ -79,19 +97,24 @@ class QuestionsController extends AbstractController
          if ($form->isSubmitted() && $form->isValid()) {
             $searchData->page=$request->query->getInt('page',1);
             $questions=$repository->findBySearch($searchData);
-            return $this->render('questions/index.html.twig',[
+            return $this->render('questions/indexcat.html.twig',[
                 'form'=>$form->createView(),
                 'questions' => $questions
             ]);
          }
-
-        $questions = $paginator->paginate(
+        
+        /*$questions = $paginator->paginate(
             $repository->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );*/
+        $questions = $paginator->paginate(
+            $repository->findBy(['category' => $category->getId()]),
             $request->query->getInt('page', 1),
             10
         );
         
-        return $this->render('questions/index.html.twig',[
+        return $this->render('questions/indexcat.html.twig',[
             'form'=>$form->createView(),
             'questions' => $questions
         ]);
