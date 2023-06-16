@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Questions;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +43,7 @@ class EditQuestionsType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('content',TextareaType::class,[
+            ->add('content',CKEditorType::class,[
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a word',

@@ -48,7 +48,7 @@ class ContactType extends AbstractType
                    
                 ]
             ])
-            ->add('message',TextareaType::class,[
+            ->add('message',CKEditorType::class,[
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a word',

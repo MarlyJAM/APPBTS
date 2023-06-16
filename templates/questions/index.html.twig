@@ -3,6 +3,9 @@
 {% block title %}questions{% endblock %}
 
 {% block body %}
+    <div >
+     <img class="card-img" src="{{asset('images/Caté.png')}}"><br>
+    </div>
     <div id="cardq" class="row row-cols-1 row-cols-md-3 g-4 w-75 mx-auto my-auto d-flex align-content-around flex-wrap">
     {% for category in categories %}
     {#% if question.isVerified == true %#}
@@ -11,10 +14,8 @@
             <div class="card-header">
              {{category.name}}
              </div>
-            <div class="card-body">
+            <div class="card-body mx-auto my-auto">
               <a href="/{{category.id}}/allquestions/ "class="btn btn-primary">{{ button_label|default('Voir Les Questions') }}</a>
-            </div>
-            <div class="card-footer text-muted">
             </div>
         </div>
         </div>
